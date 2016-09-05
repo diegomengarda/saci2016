@@ -1,0 +1,41 @@
+<html ng-app="lista">
+	<head>
+		<title>AngularJS</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+		<script src="lib/angular/angular.js"></script>
+		<script>
+		angular.module('lista', []);
+		angular.module('lista').controller('listaCtrl', function($scope) {
+			$scope.titulo = "Lista Emails";
+			$scope.contatos = [
+				{ nome: "Bruninho", email: "bruninho@brasil.com.br" },
+				{ nome: "Lucão", email: "lucao@brasil.com.br" },
+				{ nome: "Serginho", email: "serginho@brasil.com.br" },
+				{ nome: "Lipe", email: "lipe@brasil.com.br" }
+			];
+		});
+		</script>
+	</head>
+	<body ng-controller="listaCtrl">
+		<div class="container">
+			<h2>{{titulo}}</h2>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>E-mail</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="contato in contatos">
+						<td>{{contato.nome}}</td>
+						<td>{{contato.email}}</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

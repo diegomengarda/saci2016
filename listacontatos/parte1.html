@@ -1,0 +1,18 @@
+<html ng-app="lista">
+	<head>
+		<title>AngularJS</title>
+		<meta charset="utf-8">
+		<script src="lib/angular/angular.js"></script>
+		<script>
+		angular.module('lista', []);
+		angular.module('lista').controller('listaCtrl', function($scope) {
+			$scope.titulo = "Lista Telefônica";
+		});
+		</script>
+	</head>
+	<body ng-controller="listaCtrl">
+		<div>
+			<h2>{{titulo}}</h2>
+		</div>
+	</body>
+</html>

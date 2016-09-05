@@ -1,0 +1,101 @@
+<html ng-app="lista">
+	<head>
+		<title>AngularJS</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+		<script src="lib/angular/angular.js"></script>
+		<script>
+		angular.module('lista', []);
+		angular.module('lista').controller('listaCtrl', function($scope) {
+
+			$scope.titulo = "Lista Emails";
+			$scope.contato = {};
+			$scope.cadastrar = false;
+			$scope.mostrarMensagem = false;
+
+			$scope.contatos = [
+				{ nome: "Bruninho", email: "bruninho@brasil.com.br" },
+				{ nome: "Lucão", email: "lucao@brasil.com.br" },
+				{ nome: "Serginho", email: "serginho@brasil.com.br" },
+				{ nome: "Lipe", email: "lipe@brasil.com.br" }
+			];
+
+			$scope.cancelarCadastro = function() {
+				$scope.cadastrar = false;
+				$scope.contato = {};
+			};
+
+			$scope.adicionarContato = function() {
+				$scope.cadastrar = true;
+				$scope.mostrarMensagem = false;
+			};
+
+			$scope.salvarContato = function(contato) {
+				var dados = angular.copy(contato);
+				$scope.contatos.push(dados);
+				$scope.mostrarMensagem = true;
+				$scope.cadastrar = false;
+			};
+
+			$scope.removerContato = function(contato) {
+				if(confirm('Deseja realmente excluir esse contato?')) {
+					$scope.contatos = $scope.contatos.filter(function(val) {
+						return val.email !== contato.email;
+					});
+				}
+			};
+
+		});
+		</script>
+	</head>
+	<body ng-controller="listaCtrl">
+		<div class="container">
+
+			<h2 class="clearfix">
+				<span class="pull-left">{{titulo}}</span>
+				<a href="" ng-click="adicionarContato()" class="btn btn-success pull-right">Novo Contato</a>
+			</h2>
+
+			<div class="alert alert-success" role="alert" ng-if="mostrarMensagem">
+				Contato salvo com sucesso.
+			</div>
+
+			<div class="jumbotron" ng-if="cadastrar === true">
+				<h3>Novo Contato</h3>
+				<form class="form">
+					<div class="form-group">
+						<label>Nome</label>
+						<input type="text" ng-model="contato.nome" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>E-mail</label>
+						<input type="email" ng-model="contato.email" class="form-control" required>
+					</div>
+					<div class="form-group clearfix">
+						<button type="submit" ng-click="salvarContato(contato)" class="btn btn-primary pull-left">Enviar</button>
+						<button type="button" ng-click="cancelarCadastro()" class="btn btn-default pull-right">Cancelar</button>
+					</div>
+				</form>
+			</div>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Email</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="contato in contatos">
+						<td>{{contato.nome}}</td>
+						<td>{{contato.email}}</td>
+						<td>
+							<a href="" ng-click="removerContato(contato)" class="btn btn-danger">Remover</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
